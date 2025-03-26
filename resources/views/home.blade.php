@@ -1,28 +1,55 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Home - E-Commerce</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-        <div class="container">
-            <a class="navbar-brand" href="/">SShop</a>
-            <div class="collapse navbar-collapse">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="/products">Produk</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/cart">Keranjang</a></li>
-                </ul>
+<x-layout>
+    <h3 class="text-center my-4">Selamat Datang di Warung Pink</h3>
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-4 mb-3">
+                <x-card 
+                    title="Nasi Goreng" 
+                    text="Nasi Goreng Dengan Kemurnian Alami" 
+                    image="https://sanex.co.id/wp-content/uploads/2024/11/2734.jpg" 
+                    link="/products/NS"
+                />
+            </div>
+            <div class="col-md-4 mb-3">
+                <x-card 
+                    title="Lengko Ndog" 
+                    text="Perpaduan Lengko Dengan Telor Dadar Yang Nikmat" 
+                    image="https://asset-2.tstatic.net/jabar/foto/bank/images/nasi-lengko-cirebon.jpg" 
+                    link="/products/LN"
+                />
+            </div>
+            <div class="col-md-4 mb-3">
+                <x-card 
+                    title="Campur Ndog" 
+                    text="Perpaduan Lauk Seadanya Dengan Toping Telor Dadar" 
+                    image="https://media-cdn.tripadvisor.com/media/photo-m/1280/15/21/2e/06/nasi-campur-telur-ceplok.jpg" 
+                    link="/products/CN"
+                />
             </div>
         </div>
-    </nav>
-
-    <div class="container text-center mt-5">
-        <h1>Selamat Datang di MyShop</h1>
-        <p>Temukan produk terbaik dengan harga terbaik!</p>
-        <a href="/products" class="btn btn-primary">Lihat Produk</a>
     </div>
-</body>
-</html>
+
+    <div class="text-center mt-4">
+        <button class="btn btn-success px-4 py-2 fw-bold" onclick="showAlert()">🎉 Lihat Penawaran Spesial</button>
+    </div>
+
+    <div id="alertBox" class="alert alert-warning text-center mt-3 d-none" role="alert">
+        Diskon besar-besaran hanya hari ini! Jangan sampai ketinggalan. 🎊
+        <button type="button" class="btn-close float-end" aria-label="Close" onclick="hideAlert()"></button>
+    </div>
+
+    <script>
+        function showAlert() {
+            let alertBox = document.getElementById('alertBox');
+            alertBox.classList.remove('d-none');
+            alertBox.classList.add('d-block');
+        }
+
+        function hideAlert() {
+            let alertBox = document.getElementById('alertBox');
+            alertBox.classList.remove('d-block');
+            alertBox.classList.add('d-none');
+        }
+    </script>
+</x-layout>

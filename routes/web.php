@@ -11,8 +11,15 @@ Route::get('/products', function () {
     return view('products');
 });
 
-Route::get('/products/{id}', function ($id) {
-    return view('product-detail', ['id' => $id]);
+Route::get('/products/{slug}', function ($slug) {
+    return view('product-detail', ['id' => $slug]);
+});
+Route::get('/categories', function () {
+    return view('categories');
+});
+
+Route::get('/categories/{slug}', function ($slug) {
+    return view('categories-single', ['id' => $slug]);
 });
 
 Route::get('/cart', function () {
