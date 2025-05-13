@@ -2,38 +2,56 @@
 
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
+use App\Http\Controllers\HomepageController;
+use App\Http\Controllers\ProductCategoryController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\DashboardController;
 
-Route::get('/', function () {
-    return view('home');
+/*
+|--------------------------------------------------------------------------
+| Rute Publik (Website Depan)
+|--------------------------------------------------------------------------
+*/
+
+Route::get('/', [HomepageController::class, 'index'])->name('home');
+Route::get('cart', [HomepageController::class, 'cart']);
+Route::get('about', function () {
+    return view('web.about', ['title' => 'about - toko gue']);
+});
+Route::get('contact', function () {
+    return view('web.contact');
+});
+Route::get('product', function () {
+    return view('web.products');
+});
+Route::get('product/{slug}', function ($slug) {
+    return view('web.single_product');
+});
+Route::get('categories', function () {
+    return view('web.categories');
+});
+Route::get('category/{slug}', function ($slug) {
+    return view('web.single_category');
 });
 
-Route::get('/products', function () {
-    return view('products');
+/*
+|--------------------------------------------------------------------------
+| Rute Dashboard (Admin Area, Authenticated)
+|--------------------------------------------------------------------------
+*/
+
+Route::middleware(['auth', 'verified'])->prefix('dashboard')->group(function () {
+   Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+
+   Route::resource('categories', ProductCategoryController::class);
+   Route::resource('products', ProductController::class);
 });
 
-Route::get('/products/{slug}', function ($slug) {
-    return view('product-detail', ['id' => $slug]);
-});
-Route::get('/categories', function () {
-    return view('categories');
-});
-
-Route::get('/categories/{slug}', function ($slug) {
-    return view('categories-single', ['id' => $slug]);
-});
-
-Route::get('/cart', function () {
-    return view('cart');
-});
-
-Route::get('/checkout', function () {
-    return view('checkout');
-});
-
-
-Route::view('dashboard', 'dashboard')
-    ->middleware(['auth', 'verified'])
-    ->name('dashboard');
+/*
+|--------------------------------------------------------------------------
+| Rute Pengaturan User (Volt)
+|--------------------------------------------------------------------------
+*/
 
 Route::middleware(['auth'])->group(function () {
     Route::redirect('settings', 'settings/profile');
@@ -42,5 +60,11 @@ Route::middleware(['auth'])->group(function () {
     Volt::route('settings/password', 'settings.password')->name('settings.password');
     Volt::route('settings/appearance', 'settings.appearance')->name('settings.appearance');
 });
+
+/*
+|--------------------------------------------------------------------------
+| Auth Routes (Register, Login, etc.)
+|--------------------------------------------------------------------------
+*/
 
 require __DIR__.'/auth.php';
